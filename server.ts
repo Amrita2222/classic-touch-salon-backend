@@ -50,7 +50,11 @@ app.use(routes);
 // Error handler middleware
 app.use(errorHandler);
 
-const mongoDbUri = process.env.MONGODB_URI || "";
+const mongoDbUri = process.env.MONGODB_URI;
+if(!mongoDbUri) {
+  console.error('MongoDB URI is not defined in environment variables');
+  process.exit(1);
+}
 
 // Database connection function
 const connectDB = async () => {
@@ -60,7 +64,7 @@ const connectDB = async () => {
   }
   
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(mongoDbUri);
     isConnected = true;
     console.log('Connected to MongoDB');
   } catch (err) {
