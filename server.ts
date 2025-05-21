@@ -50,6 +50,8 @@ app.use(routes);
 // Error handler middleware
 app.use(errorHandler);
 
+const mongoDbUri = process.env.MONGODB_URI || "";
+
 // Database connection function
 const connectDB = async () => {
   if (isConnected) {
