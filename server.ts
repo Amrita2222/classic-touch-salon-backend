@@ -10,7 +10,7 @@ import rateLimit from 'express-rate-limit';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // For Vercel serverless deployment
 let isConnected = false;
@@ -80,11 +80,10 @@ connectDB();
 // Only start the server in development mode
 // In Vercel serverless environment, the serverless function
 // will handle the requests without explicitly listening
-if (process.env.NODE_ENV !== 'production') {
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-}
 
 // Export the app for serverless functions
 export default app;
