@@ -12,8 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// For Vercel serverless deployment
-let isConnected = false;
+
 
 // CORS configuration
 const corsOptions = {
@@ -58,14 +57,8 @@ if(!mongoDbUri) {
 
 // Database connection function
 const connectDB = async () => {
-  if (isConnected) {
-    console.log('Already connected to MongoDB');
-    return;
-  }
-  
   try {
     await mongoose.connect(mongoDbUri);
-    isConnected = true;
     console.log('Connected to MongoDB');
   } catch (err) {
     console.error('MongoDB connection error:', err);
@@ -75,15 +68,18 @@ const connectDB = async () => {
 };
 
 // Connect to database
-connectDB();
+
 
 // Only start the server in development mode
 // In Vercel serverless environment, the serverless function
 // will handle the requests without explicitly listening
 
+connectDB().then(() => {
+  console.log('Database connection established');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+});
 
 // Export the app for serverless functions
 export default app;
