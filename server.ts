@@ -58,7 +58,7 @@ if(!mongoDbUri) {
 // Database connection function
 const connectDB = async () => {
   try {
-    await mongoose.connect(mongoDbUri);
+    await mongoose.connect(mongoDbUri!);
     console.log('Connected to MongoDB');
   } catch (err) {
     console.error('MongoDB connection error:', err);
